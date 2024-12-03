@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import Image from 'next/image'
 import Link from 'next/link'
 import { createAcount } from '@/lib/actions/user.actions'
+import OtpModule from './OtpModule'
 
 type Formtype= 'sing-in' | 'sing-up'
 
@@ -134,6 +135,8 @@ const onSubmit= async (values: z.infer<typeof formSchema>) =>{
   </div>
           </form>
         </Form>
+
+        {true && <OtpModule email={form.getValues('email')} accountId={accountid}/>}
     </>
       )
     }
