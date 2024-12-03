@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import Image from 'next/image'
 import Link from 'next/link'
+import { createAcount } from '@/lib/actions/user.actions'
 
 type Formtype= 'sing-in' | 'sing-up'
 
@@ -34,6 +35,7 @@ const authformSchema =(formtype:Formtype) => {
 function AuthForm({type}:{type:Formtype}) {
     const [isLoading, setisLoading] = useState(false)
     const [errorMessage, seterrorMessage] = useState('')
+    const [accountid, setaccountid] = useState(null)
     const formSchema = authformSchema(type);    
     const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
@@ -43,8 +45,21 @@ function AuthForm({type}:{type:Formtype}) {
             },
           })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-          console.log(values)
+const onSubmit= async (values: z.infer<typeof formSchema>) =>{
+        setisLoading(true)
+        seterrorMessage('')
+          try {
+            const user = await createAcount({email:values.email , fullname :values.fullname || ''})
+            setaccountid(user.accountid)
+            
+          } catch (error) {
+            seterrorMessage('field to create account')
+            
+          }  finally { 
+            setisLoading(false)
+          }
+
+
         }
     return (<>
     
