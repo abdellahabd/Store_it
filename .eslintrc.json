@@ -10,6 +10,15 @@
     "no-undef": "off",
     "no-unused-vars": "off",
     "@typescript-eslint/no-require-imports": "off",
-    "@typescript-eslint/no-unused-vars":"off"
-  }
+    "@typescript-eslint/no-unused-vars": "off"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }
