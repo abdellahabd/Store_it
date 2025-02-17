@@ -6,7 +6,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-const SideBare = () => {
+interface Props {
+  fullname: string;
+  email: string;
+  avatar: string;
+}
+const SideBare = ({ fullname, email, avatar }: Props) => {
   const pathname = usePathname();
   return (
     <aside className='sidebar'>
@@ -68,7 +73,11 @@ const SideBare = () => {
           className='sidebar-user-avatar'
           width={44}
           height={44}
-        ></Image>
+        />
+        <div className='hidden lg:block'>
+          <p className='subtitle-2 capitalize'>{fullname}</p>
+          <p className='caption'>{email}</p>
+        </div>
       </div>
     </aside>
   );
