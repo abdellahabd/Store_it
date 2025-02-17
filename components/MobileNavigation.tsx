@@ -10,6 +10,11 @@ import {
 } from '@/components/ui/sheet';
 import { useState } from 'react';
 import { Separator } from './ui/separator';
+import { navitems } from '@/constants';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Button } from './ui/button';
 
 interface Props {
   accountId: string;
@@ -19,6 +24,7 @@ interface Props {
 }
 function MobileNavigation({ accountId, avatar, email, fullname }: Props) {
   const [open, setopen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className='mobile-header'>
@@ -56,10 +62,50 @@ function MobileNavigation({ accountId, avatar, email, fullname }: Props) {
             </div>
             <Separator className='mb-4 bg-light-200/20' />
           </SheetTitle>
-          <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </SheetDescription>
+          <nav className='mobile-nav'>
+            {' '}
+            <ul className='mobile-nav-list'>
+              {navitems.map(({ icon, name, url }) => (
+                <Link key={name} href={url} className='lg:w-full'>
+                  <li
+                    className={cn(
+                      'mobile-nav-item',
+                      pathname === url && 'shad-active',
+                    )}
+                  >
+                    <Image
+                      alt={name}
+                      src={icon}
+                      width={24}
+                      height={24}
+                      className={cn(
+                        'nav-icon',
+                        pathname === url && 'nav-icon-active',
+                      )}
+                    />
+                    <p>{name}</p>
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          </nav>
+          <Separator className='mb-4 bg-light-200/20' />
+          <div className='flex flex-col justify-between gap-6 pb-5'>
+            Filenameuploader
+            <Button
+              className='mobile-sign-out-button'
+              type='submit'
+              onClick={() => {}}
+            >
+              <Image
+                src='/assets/icons/logout.svg'
+                alt='logout'
+                width={24}
+                height={24}
+              />
+              <p>Logout</p>
+            </Button>
+          </div>
         </SheetContent>
       </Sheet>
     </header>
