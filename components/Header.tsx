@@ -1,13 +1,14 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { SingoutUser } from '@/lib/actions/user.actions';
+import FileUploader from './FileUploader';
 
 const Header = () => {
   return (
     <header className='header'>
       Search
       <div className='header-wrapper'>
-        FileUploader{' '}
+        <FileUploader />{' '}
         <form
           action={async () => {
             'use server';
