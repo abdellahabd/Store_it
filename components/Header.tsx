@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
+import { SingoutUser } from '@/lib/actions/user.actions';
 
 const Header = () => {
   return (
@@ -7,7 +8,12 @@ const Header = () => {
       Search
       <div className='header-wrapper'>
         FileUploader{' '}
-        <form>
+        <form
+          action={async () => {
+            'use server';
+            await SingoutUser();
+          }}
+        >
           {' '}
           <Button className='sign-out-button' type='submit'>
             <Image

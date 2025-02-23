@@ -5,6 +5,7 @@ import { createAdminClient, createSeassionClient } from '../appwrite';
 import { configAppwrite } from '../appwrite/config';
 import { parseStringify } from '../utils';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const getUserByEmail = async (email: string) => {
   try {
@@ -101,4 +102,17 @@ export const getCurrentUser = async () => {
   if (user.total < 0) return null;
 
   return parseStringify(user.documents[0]);
+};
+
+export const SingoutUser = async () => {
+  const { account } = await createSeassionClient();
+  try {
+    await account.deleteSession('current');
+    (await cookies()).delete('appwrite-session');
+  } catch (error) {
+    console.log(error, 'Field to Singout User');
+    throw error;
+  } finally {
+    redirect('/sign-in');
+  }
 };
